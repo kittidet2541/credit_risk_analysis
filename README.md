@@ -1,4 +1,4 @@
-
+![image](https://github.com/user-attachments/assets/04343429-0154-4c17-a02e-f4fab5e4b2a0)
 ---
 
 # Credit Risk Analysis Prediction
@@ -28,11 +28,14 @@
 ### เป้าหมาย
 โปรเจคนี้ไม่เพียงแต่จะช่วยให้เราเข้าใจปัจจัยที่ส่งผลต่อความเสี่ยงในการเป็นหนี้ แต่ยังสามารถให้ข้อมูลเชิงลึกที่เป็นประโยชน์สำหรับการวางแผนการเงินและการตัดสินใจในอนาคต โดยเฉพาะในกลุ่มผู้ให้บริการทางการเงินและผู้บริโภค
 
-
+**Understanding the Problem & Data Preparation**
 เริ่มเเรก ผมเริ่มจากการสงสัยว่า ถ้าช่วงปัจจุบัน มีภาวะเศรษฐกิจที่เเย่ลง สิ่งที่จะตามมาคือ ภาวะคนเป็นหนี้เสีย( ไม่จ่ายหนี้ ) ผมเลยเริ่มหาข้อมูลเกี่ยวกับ credit risk (bussiness understanding) ผ่านทาง kaggle เพราะว่าถือว่าเป็นข้อมูลที่มีความน่าเชื่อถือสูงนั่นเอง หลังจากที่ผมได้ข้อมูลมา ผมเริ่มทำการทำความเข้าใจข้อมูลในเเต่ละคอลัมน์เเละข้อมูลด้านใน (data understanding) ทั้งหมด
 
+**EDA and Clean Data**
 หลังจากที่สำรวจในเบื้องต้น ผมก็เริ่มมองว่า ปัญานี้สามารถแก้ไขด้วย data ได้มั้ย? ดาต้าที่รับมา สามารถนำไปแก้ไขปัญหาได้มั้ย? ซึ่งมันน่าจะสามารถตอบโจทย์ เเละแก้ไขปัญหาได้ ผมก็เริ่มสำรวจข้อมูลเชิงลึกเลย
 ซึ่งการสำรวจจะเริ่มจากการตรวจสอบข้อมูล
+
+
 
 ![image](https://github.com/user-attachments/assets/a07ffbe0-c48d-4a4d-99f5-6beace690803)
 
@@ -40,8 +43,10 @@
 ![image](https://github.com/user-attachments/assets/9ee6e3f2-218b-41a3-9341-d726d6c9a220)
 
 
+
 จะเห็นได้ว่า คอลัมน์ person_emp_length และ loan_int_rate มีข้อมูลไม่เท่าตัวอื่นๆ ข้อมูล null ผมเลยทำการคลีนข้อมูลโดยผมไปดูค่าเฉลี่ย กับ มัธยฐาน มีค่าใกล้เคียงกัน จึงทำการเติมค่า null ด้วย average 
 จากนั้นผมทำการสร้างข้อมูลเพิ่มโดยจัดกลุ่มของอายุ รายได้ เเละทำการ visualization ผลออกมาดังนี้
+**Preprocess & Visualization**
 
 ![image](https://github.com/user-attachments/assets/62003e79-29f2-4827-98ce-86bc66f29119)
 
@@ -81,7 +86,96 @@
 
 ![image](https://github.com/user-attachments/assets/d19c4812-36ef-49d9-8376-92aece279a18)
 
-จะเห็นว่ากลุ่มคนที่เช่าบ้าน มีเยอะมาก และมีอัตราการผิดชำระหนี้มากทีเดียวอาจเพราะว่า เป็นกลุ่มที่มีการเงินไม่มั่นคง
+จะเห็นว่ากลุ่มคนที่เช่าบ้าน มีเยอะมาก และมีอัตราการผิดชำระหนี้มากทีเดียวอาจเพราะว่า เป็นกลุ่มที่มีการเงินไม่มั่นคง 
+
+ต่อมาในเรื่องของกลุ่มอายุไหน ที่มีการขอสินเชื่อมากที่สุด
+
+![image](https://github.com/user-attachments/assets/875bfaf6-29b7-4092-ad60-7d3ff2fdacf1)
+
+กลุ่มที่ขอสินเชื่อมากที่สุดก็คือกลุ่มของคนอายุ 20-30 ปี เรามาขยายดูกันว่ากลุ่มคนอายุ 20-30 ปี ส่วนใหญ่รูปแบบการอยู่อาศัยเป็นแบบไหนบ้าง มาดูกัน
+
+![image](https://github.com/user-attachments/assets/6674fdda-4afc-4e8e-95ad-4b0cdf49b823)
+
+
+ขั้นตอนถัดไป จะมาดูในเรื่องของคอลัมน์ที่จะนำไปเป็น label ดูปริมาณสัดส่วนข้อมูลได้ดังนี้
+
+![image](https://github.com/user-attachments/assets/ea8894de-db48-4081-858e-413fa5f35837)
+
+จะเห็นว่าข้อมูลมีความ imbalance ที่สูง ดังนั้นในขั้นตอนการทำโฒเดล อาจจะทดลองทำ underfit overfit หรือ class weight 
+
+**Feature Engineering**
+
+มาดูในเรื่องของการทำ Feature Engineering โดยการเลือกผมจะดูที่ Heatmap (Corelation) ดีกว่า...
+
+![image](https://github.com/user-attachments/assets/dcae56a1-5d4f-42ff-8478-12182ec76b6d)
+
+จากนั้นผมทำการสร้างคอลัมน์ใหม่ขึ้นมาดังนี้
+
+![image](https://github.com/user-attachments/assets/043a14af-7431-465f-a223-46ef1727a4b9)
+
+โดยคอลัมน์ที่สร้างอิงจากความสัมพันธ์กับ Loan_status
+
+
+จากภาพ ผมได้ทำการเลือก feature ตามน้ำหนักเทียบกับ label (Loan_status) ดังนี้
+
+![image](https://github.com/user-attachments/assets/e58e513c-3f5b-412f-a165-0e5698af956f)
+
+**Model Building**
+ลำดับถัดไปจะเป็นการทำโมเดล โดยจะเริ่มจากการใช้ Logistic regression 
+*Logistic regression*
+
+![image](https://github.com/user-attachments/assets/fabbd0aa-72b1-4db2-a429-db336aa76c86)
+
+จะเห็นว่า ทำนายผลค่า 1 ได้ไม่ดี ลองหาโมเดลใหม่เพื่อมาทำนายผล
+
+*xgboost*
+
+![image](https://github.com/user-attachments/assets/669b3444-b42c-4a4d-a0f2-a98c520e3e32)
+
+จะเห็นว่า accuracy 91% เเต่พอดูที่ recall ผลทำนาย 1 ( ไม่ชำระหนี้ ) ไม่มีความเเม่นยำ ผมจึงตัดสินใจทำ class weight เพราะข้อมูลนั้นมีความ imbalance
+
+ลองทำ class weight เพิ่มเติม
+
+![image](https://github.com/user-attachments/assets/7e441fe9-8eee-4e1d-b767-93faa5211520)
+
+จะเห็นว่า พอทำ class weight เเล้ว ค่าทำนายมีความสมดุลมากขึ้น สังเกตุได้จาก recall
+
+ทีนี้ผมลองเพิ่ม feature ที่สร้างขึ้นมาจากความสัมพันธ์ของ loan_status ใหม่เข้าไปด้วย ลองทำนายผล
+
+![image](https://github.com/user-attachments/assets/2917bcd3-8e5e-42eb-b722-20e203fbc2b0)
+
+![image](https://github.com/user-attachments/assets/428e407b-b6e6-432c-b161-3da0fd974dcc)
+
+ค่า false negative ตกลงอย่างมาก เราลองมาดู feature important
+
+![image](https://github.com/user-attachments/assets/1c960317-274e-4bda-9c39-d2fcd8a800fa)
+
+ จะเห็นว่า feature ใหม่ที่เพิ่มเข้ามา loan_to_income_ratio มีความสำคัญต่อ model นี้เป็นอย่างมาก จึงลองนำฟีเจอร์นี้กลับไปที่ model ตัวเดิมที่ให้ผลดี ลองเพิ่ม feature นี้เข้าไป จะเป็นยังไง ลองไปดู
+
+ ![image](https://github.com/user-attachments/assets/09d2f01d-7fb1-49ef-a9a0-7bb89fc4ed86)
+
+ ![image](https://github.com/user-attachments/assets/252a731d-a280-40ec-b2df-27142f7889ba)
+
+หลังจากทำ feature importance + add transform feature ที่มีความ importance สูง จะเห็นได้ว่า model นี้มีการทำวานที่เเม่นยำขึ้นเป็นอย่างมาก
+
+สรุปได้ว่า การใช้ xgboost เเละทำ class weight เพื่อแก้ปัญหา imbalance และแก้ฟีเจอร์เพิ่มเติมด้วย feature important (SHAP) ได้ผลลัพท์ดีที่สุด
+
+การวิเคราะห์ credit analysis เเละ predict คนที่จะไม่จ่ายหนี้เสณ็จเรียบร้อยครับ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
