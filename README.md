@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/cbeee98b-113e-4a6e-b4d1-390fb91951f7)![image](https://github.com/user-attachments/assets/8f717124-73ea-4898-8a68-5ddd4746f741)
+
 ---
 
 # Credit Risk Analysis Prediction
